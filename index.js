@@ -2,6 +2,7 @@ import Chain from "./struct/Chain.js";
 import Wallet from "./struct/Wallet.js";
 
 
+// console.log(Chain.getChain())
 const bob = new Wallet();
 const chad = new Wallet();
 

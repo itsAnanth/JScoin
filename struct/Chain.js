@@ -2,6 +2,7 @@ import Block from "./Block.js"
 import Transaction from "./Transaction.js"
 import * as crypto from 'crypto';
 import SHA256 from "crypto-js/sha256.js";
+import LinkedList from "./LinkedList.js";
 
 const genesisTransaction = new Transaction(0, 'genesisBlock', 'genesisBlock');
 const genesisBlock = new Block('', genesisTransaction);
@@ -9,7 +10,9 @@ const genesisBlock = new Block('', genesisTransaction);
 class Chain {
     #chain;
     constructor() {
-        this.#chain = [genesisBlock];
+        // this.#chain = [genesisBlock];
+        this.#chain = new LinkedList();
+        this.#chain.push(genesisBlock);
     }
 
 
@@ -18,8 +21,9 @@ class Chain {
      * @returns {Array} Array of blocks
      */
     getChain() {
-        const dupeChain = [...this.#chain];
-        return dupeChain;
+        return this.#chain.toArray();
+        // const dupeChain = [...this.#chain];
+        // return dupeChain;
     }
 
     /**
@@ -27,7 +31,8 @@ class Chain {
      * @returns {Block}
      */
     lastBlock() {
-        return this.#chain[this.#chain.length - 1];
+        return this.#chain.lastNode();
+        // return this.#chain[this.#chain.length - 1];
     }
 
 
@@ -65,7 +70,7 @@ class Chain {
 
         const isValid = verify.verify(senderPublicKey, signature);
         if (isValid) {
-            const newBlock = new Block(this.lastBlock().hash(), transaction);
+            const newBlock = new Block(this.lastBlock().data.hash(), transaction);
             this.mine(newBlock.nonce);
             this.#chain.push(newBlock);
         }
