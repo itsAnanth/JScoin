@@ -1,4 +1,4 @@
-import SHA256 from 'crypto-js/sha256.js';
+import * as crypto from 'crypto';
 import type { Block as IBlock, blockPayload } from '../types/Block';
 
 interface Block extends IBlock { };
@@ -13,9 +13,7 @@ class Block {
     }
 
     getHash(): string {
-        const block = JSON.stringify(this);
-        const hash = SHA256(block).toString();
-        return hash;
+        return crypto.createHash('sha256').update(JSON.stringify(this.transaction) + this.nonce + this.previousHash + this.timestamp).digest('hex')
     }
 }
 
