@@ -17,18 +17,24 @@ class Wallet {
         this.privateKey = this.keyPair.privateKey;
     }
 
-    send(amount: number, payeePublicKey: string) {
+    send(amount: number, toPublicKey: string) {
+        let signature = null;
         const transaction = new Transaction({
             amount,
-            payeeID: payeePublicKey,
-            payerID: this.publicKey
+            to: toPublicKey,
+            from: this.publicKey
         });
 
         const sign = crypto.createSign('SHA256');
         sign.update(transaction.toString()).end();
 
-        const signature = sign.sign(this.privateKey);
-        Chain.addBlock(transaction, this.publicKey, signature);
+        try {
+            signature = sign.sign(this.privateKey);
+        } catch(e) {
+            console.log('Filed signing\n' + e);
+            return;
+        }
+        Chain.addBlock(transaction, signature);
     }
 }
 
