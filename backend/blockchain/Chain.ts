@@ -52,7 +52,7 @@ class Chain {
         const isValid = verify.verify(senderPublicKey, signature);
         if (isValid) {
             const newBlock = new Block({
-                previousHash: this.lastBlock().data.getHash(),
+                previousHash: this.lastBlock().data.hash,
                 transaction
             });
             this.mine(newBlock.nonce);
