@@ -46,10 +46,16 @@ class Chain {
     }
 
     addBlock(transaction: Transaction, signature: NodeJS.ArrayBufferView) {
+        let isValid = false;
         const verify = crypto.createVerify('SHA256');
         verify.update(transaction.toString());
 
-        const isValid = verify.verify(transaction.from, signature);
+        try {
+            isValid = verify.verify(transaction.from, signature);
+        } catch(e) {
+            console.log('Invalid transaction [public key not valid]');
+            return;
+        }
         if (isValid) {
             const newBlock = new Block({
                 previousHash: this.lastBlock().data.hash,
