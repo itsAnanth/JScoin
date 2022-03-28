@@ -1,17 +1,16 @@
 import Block from "./Block"
 import Transaction from "./Transaction"
 import * as crypto from 'crypto';
-import SHA256 from "crypto-js/sha256";
 import LinkedList from "./LinkedList";
 
 const genesisTransaction = new Transaction({
     amount: 0,
-    payeeID: 'gblock',
-    payerID: 'gblock'
+    to: 'gblock',
+    from: 'gblock'
 });
 
 const genesisBlock = new Block({
-    previousHash: '',
+    previousHash: crypto.createHash('sha256').update('genesisBlock').digest('hex'),
     transaction: genesisTransaction
 });
 
@@ -35,7 +34,8 @@ class Chain {
 
         while(true) {
             const secret = (nonce + solution).toString();
-            const attempt = SHA256(secret).toString();
+            // const attempt = SHA256(secret).toString();
+            const attempt = crypto.createHash('sha256').update(secret).digest('hex');
 
             if (attempt.substr(0, 4) === '0000') {
                 console.log(`Solved: ${solution}`);
@@ -45,11 +45,11 @@ class Chain {
         }
     }
 
-    addBlock(transaction: Transaction, senderPublicKey: string, signature: NodeJS.ArrayBufferView) {
+    addBlock(transaction: Transaction, signature: NodeJS.ArrayBufferView) {
         const verify = crypto.createVerify('SHA256');
         verify.update(transaction.toString());
 
-        const isValid = verify.verify(senderPublicKey, signature);
+        const isValid = verify.verify(transaction.from, signature);
         if (isValid) {
             const newBlock = new Block({
                 previousHash: this.lastBlock().data.hash,
@@ -57,6 +57,23 @@ class Chain {
             });
             this.mine(newBlock.nonce);
             this.chain.push(newBlock);
+        } else {
+            console.log('!!! not a valid transaction')
+        }
+    }
+
+    getBalanceFromKey(publicKey: string) {
+        let balance = 0;
+        const chain = this.getChain();
+
+        for (let i = 0; i < chain.length; i++) {
+            const transaction = chain[i].transaction;
+            if (transaction.to === publicKey)
+                balance += transaction.amount;
+            else if (transaction.from === publicKey)
+                balance -= transaction.amount;
+
+            return balance;                
         }
     }
 }
