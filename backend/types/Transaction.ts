@@ -1,14 +1,14 @@
 interface Transaction {
     amount: number;
-    payerID: string;
-    payeeID: string;
+    to: string;
+    from: string;
     toString: () => string;
 }
 
 type transactionPayload = {
     amount: number;
-    payerID: string;
-    payeeID: string;
+    from: string;
+    to: string;
 }
 
 export type { Transaction, transactionPayload };
