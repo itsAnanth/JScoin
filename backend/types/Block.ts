@@ -1,6 +1,8 @@
+import type { Transaction } from './Transaction';
+
 interface Block {
     previousHash: string;
-    transaction: any;
+    transaction: Transaction;
     timestamp: number;
     nonce: number;
 
@@ -9,7 +11,7 @@ interface Block {
 
 type blockPayload = {
     previousHash: string;
-    transaction: any;
+    transaction: Transaction;
     timestamp?: number;
 }
 
