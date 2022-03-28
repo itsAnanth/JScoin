@@ -1,5 +1,3 @@
-import * as crypto from 'crypto';
-import Transaction from './Transaction';
 import SHA256 from 'crypto-js/sha256.js';
 import type { Block as IBlock, blockPayload } from '../types/Block';
 
