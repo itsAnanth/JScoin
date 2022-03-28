@@ -1,8 +1,9 @@
 import * as crypto from 'crypto';
-import Chain from './Chain.js';
-import Transaction from './Transaction.js';
+import Chain from './Chain';
+import Transaction from './Transaction';
+import type { Wallet as IW } from '../types/Wallet';
 
-
+interface Wallet extends IW { };
 
 class Wallet {
     
@@ -16,13 +17,12 @@ class Wallet {
         this.privateKey = this.keyPair.privateKey;
     }
 
-    /**
-     * 
-     * @param {number} amount 
-     * @param {string} payeePublicKey 
-     */
-    send(amount, payeePublicKey) {
-        const transaction = new Transaction(amount, this.publicKey, payeePublicKey);
+    send(amount: number, payeePublicKey: string) {
+        const transaction = new Transaction({
+            amount,
+            payeeID: payeePublicKey,
+            payerID: this.publicKey
+        });
 
         const sign = crypto.createSign('SHA256');
         sign.update(transaction.toString()).end();
