@@ -1,5 +1,5 @@
-import Chain from "./struct/Chain.js";
-import Wallet from "./struct/Wallet.js";
+import Chain from "./blockchain/Chain";
+import Wallet from "./blockchain/Wallet";
 
 
 // console.log(Chain.getChain())
