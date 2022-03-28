@@ -9,9 +9,10 @@ class Block {
         this.transaction = transaction;
         this.timestamp = timestamp;
         this.nonce = Math.floor(Math.random() * 999999999);
+        this.hash = this.getHash();
     }
 
-    hash(): string {
+    getHash(): string {
         const block = JSON.stringify(this);
         const hash = SHA256(block).toString();
         return hash;

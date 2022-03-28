@@ -5,8 +5,9 @@ interface Block {
     transaction: Transaction;
     timestamp: number;
     nonce: number;
+    hash: string;
 
-    hash: () => string;
+    getHash: () => string;
 }
 
 type blockPayload = {

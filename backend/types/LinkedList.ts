@@ -1,5 +1,7 @@
+import { Block } from "./Block";
+
 interface ListNode {
-    data: any;
+    data: Block;
     next: null | ListNode;
 }
 
