@@ -3,10 +3,10 @@ import type { Transaction as IT, transactionPayload } from '../types/Transaction
 interface Transaction extends IT { };
 
 class Transaction {
-    constructor({ amount, payerID, payeeID }: transactionPayload) {
+    constructor({ amount, to, from }: transactionPayload) {
         this.amount = amount,
-        this.payerID = payerID;
-        this.payeeID = payeeID;
+        this.to = to;
+        this.from = from;
     }
 
     toString(): string {
