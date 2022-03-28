@@ -1,21 +1,22 @@
+import type { ListNode as ILN } from '../types/LinkedList';
+
+interface ListNode extends ILN { };
+
 class ListNode {
-    constructor(value, next) {
+    constructor(value: any, next?: null | undefined | ListNode) {
         this.data = value;
         this.next = !next ? null : next;
     }
 }
 
 class LinkedList {
-    #head;
-    constructor() {
-        this.#head = null;
-    }
+    private head: ListNode = null;
 
-    push(value) {
+    push(value: any) {
         const newNode = new ListNode(value);
-        let temp = this.#head;
+        let temp = this.head;
         if (!temp) {
-            this.#head = newNode
+            this.head = newNode
             return;
         }
 
@@ -26,16 +27,16 @@ class LinkedList {
         temp.next = newNode;
     } 
 
-    unshift(value) {
+    unshift(value: any) {
         const newNode = new ListNode(value);
-        newNode.next = this.#head;
-        this.#head = newNode;
+        newNode.next = this.head;
+        this.head = newNode;
     }
 
 
     print() {
-        let current = this.#head;
-        if (!this.#head) return console.log('This is an empty list');
+        let current = this.head;
+        if (!this.head) return console.log('This is an empty list');
         while (current) {
             console.log(current.data);
             current = current.next;
@@ -43,7 +44,7 @@ class LinkedList {
     }
 
     lastNode() {
-        let current = this.#head;
+        let current = this.head;
         while(true) {
             if (current.next == null) return current;
             current = current.next;
@@ -53,8 +54,8 @@ class LinkedList {
 
     toArray() {
         const array = [];
-        let current = this.#head;
-        if (!this.#head) return [];
+        let current = this.head;
+        if (!this.head) return [];
         while (current) {
             array.push(current.data);
             current = current.next;
@@ -64,7 +65,7 @@ class LinkedList {
 
 
     reverse() {
-        let current = this.#head;
+        let current = this.head;
         let previous = null;
         let temp = null;
 
@@ -75,7 +76,7 @@ class LinkedList {
             current = temp;
         }
 
-        this.#head = previous
+        this.head = previous
     }
 }
 
