@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain</title>
+</head>
+
+<body>
+    <input type="text" placeholder="amount" id="0">
+    <form encType="multipart/form-data" name='fileUpload' id='file-upload'>
+        <div className='form-group'>
+            <label className='custom-label'>public key: </label>
+            <input type="file" name="user-file"></input>
+        </div>
+        <div className='form-group'>
+            <label className='custom-label'>private key: </label>
+            <input type="file" name="user-file"></input>
+        </div>
+        <div className='form-group'>
+            <label className='custom-label'>payee public key: </label>
+            <input type="file" name="user-file"></input>
+        </div>
+    </form>
+
+    <button id="submit">Send</button>
+</body>
+<script>
+    const btn = document.getElementById('submit');
+
+    btn.addEventListener('click', async () => {
+        const amount = document.getElementById('0');
+        let formElement = document.getElementById("file-upload");
+        let request = new XMLHttpRequest();
+        request.open("POST", "http://localhost:5000/", true);
+        const data = new FormData(formElement);
+        data.append('amount', amount.value)
+        request.send(data);
+    })
+</script>
+
+</html>
