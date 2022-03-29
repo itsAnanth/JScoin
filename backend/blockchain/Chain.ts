@@ -54,8 +54,11 @@ class Chain {
             isValid = verify.verify(transaction.from, signature);
         } catch(e) {
             console.log('Invalid transaction [public key not valid]');
-            return;
+            isValid = false;
         }
+
+        if (!isValid) return false;
+
         if (isValid) {
             const newBlock = new Block({
                 previousHash: this.lastBlock().data.hash,
@@ -63,9 +66,9 @@ class Chain {
             });
             this.mine(newBlock.nonce);
             this.chain.push(newBlock);
-        } else {
-            console.log('!!! not a valid transaction')
         }
+
+        return true;
     }
 
     getBalanceFromKey(publicKey: string) {
