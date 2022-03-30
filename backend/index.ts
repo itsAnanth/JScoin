@@ -3,8 +3,6 @@ import Chain from "./blockchain/Chain";
 import Transaction from "./blockchain/Transaction";
 import Wallet from "./blockchain/Wallet";
 import sshpk from 'sshpk';
-import key from './key.json';
-
 
 // const d = new Wallet();
 // const bob = new Wallet();
@@ -23,7 +21,7 @@ import key from './key.json';
 // console.log(sshpk.parseKey(Buffer.from(hex, 'hex')).toString('pem') === bob.publicKey);
 
 import express from 'express';
-import Server from './modules/Server';
+import Server from './server/Server';
 import cors from 'cors';
 import fs from 'fs';
 import multer from 'multer';
