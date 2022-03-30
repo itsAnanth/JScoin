@@ -81,11 +81,10 @@ class Chain {
                 balance += transaction.amount;
             else if (transaction.from === publicKey)
                 balance -= transaction.amount;
-
-            return balance;                
         }
+        return balance;                
     }
 }
 
 
-export default new Chain();
+export default Chain;

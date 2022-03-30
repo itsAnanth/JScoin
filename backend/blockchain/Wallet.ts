@@ -2,6 +2,7 @@ import * as crypto from 'crypto';
 import Chain from './Chain';
 import Transaction from './Transaction';
 import type { Wallet as IW } from '../types/Wallet';
+import Store from './Store';
 
 interface Wallet extends IW { };
 
@@ -34,7 +35,7 @@ class Wallet {
             console.log('Filed signing\n' + e);
             return;
         }
-        return Chain.addBlock(transaction, signature);
+        return Store.chain.addBlock(transaction, signature);
     }
 
     send(amount: number, toPublicKey: string) {
@@ -54,7 +55,7 @@ class Wallet {
             console.log('Filed signing\n' + e);
             return;
         }
-        return Chain.addBlock(transaction, signature);
+        return Store.chain.addBlock(transaction, signature);
     }
 }
 
