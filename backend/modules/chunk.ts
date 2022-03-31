@@ -1,27 +1,14 @@
-function chunk(s: Buffer, maxBytes: number) {
-    let buffer = Buffer.from(s);
-    const result = [];
-    let i = 1;
-
+function chunk(buffer: Buffer, maxBytes: number) {
     if (buffer.byteLength <= maxBytes) return [buffer];
 
+    const result: Buffer[] = [];
     while (buffer.length) {
-        if (buffer.byteLength <= 1) {
-            result.push(buffer.slice(0, buffer.length));
-            break;
-        }
+        if (buffer.length < maxBytes) return [...result, buffer.slice(0, buffer.length)];
 
-        let temp = buffer.slice(0, i);
-
-        if (buffer.byteLength == temp.byteLength || temp.byteLength >= maxBytes) {
-            result.push(buffer.slice(0, i));
-            buffer = buffer.slice(i);
-            i = 1;
-        } else
-            i++;
-
+        result.push(buffer.slice(0, maxBytes));
+        buffer = buffer.slice(maxBytes);
     }
+
     return result;
 }
-
 export default chunk;
