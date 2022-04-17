@@ -1,2 +1,2 @@
 # JScoin
-Simple implementation of Blockchain using Javascript
+Simple implementation of Blockchain using Typescript
